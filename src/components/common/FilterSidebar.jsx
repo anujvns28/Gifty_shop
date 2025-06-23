@@ -20,7 +20,10 @@ const FilterSidebar = ({ toggled, setToggled,loadingFunction, }) => {
 
     
     const fetchProducts = async () => {
-        const result = await getAllSubCategoriesProduct(subCategoryId);
+        const result = await getAllSubCategoriesProduct(
+          subCategoryId,
+          dispatch
+        );
         if (result) {
             dispatch(setSubCategory(result.data));
         }

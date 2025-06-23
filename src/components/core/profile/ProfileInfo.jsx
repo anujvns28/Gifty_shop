@@ -19,40 +19,43 @@ const ProfileInfo = () => {
         {gender:"Female"}
     ]
 
-   
+    console.log(user, "this is user in profile info");
 
     const isInformationUpdated = (data) => {
-      if(data.firstName !== user.firstName ||
+      if (
+        data.firstName !== user.firstName ||
         data.lastName !== user.lastName ||
         data.gender !== user.additionalInfo.gender ||
         data.contactNumber !== user.additionalInfo.contactNumber ||
         data.about !== user.additionalInfo.about ||
         data.dateOfBirth !== user.additionalInfo.dateOfBirth
-      ){
-        return true
-      }else{
-        return false
+      ) {
+        return true;
+      } else {
+        return false;
       }
-    }
+    };
 
-    const handleForm = async(data) => {
+    const handleForm = async (data) => {
       const result = isInformationUpdated(data);
-     if(result){
-      await updateUserProfile(data,dispatch)
-     }else{
-      toast.error("No updation made")
-     }
-    }
+      if (result) {
+        await updateUserProfile(data, dispatch);
+      } else {
+        toast.error("No updation made");
+      }
+    };
 
     useEffect(() => {
-      setValue("userId",user._id);
-     setValue("firstName",user.firstName);
-     setValue("lastName",user.lastName);
-     setValue("gender",user.additionalInfo.gender);
-     setValue("dateOfBirth",user.additionalInfo.dateOfBirth);
-     setValue("contactNumber",user.additionalInfo.contactNumber);
-     setValue("about",user.additionalInfo.about)
-    },[])
+      setValue("userId", user._id);
+      setValue("firstName", user.firstName);
+      setValue("lastName", user.lastName);
+      if (user.additionalInfo) {
+        setValue("gender", user.additionalInfo.gender || "");
+        setValue("dateOfBirth", user.additionalInfo.dateOfBirth);
+        setValue("contactNumber", user.additionalInfo.contactNumber);
+        setValue("about", user.additionalInfo.about);
+      }
+    }, []);
 
     
 

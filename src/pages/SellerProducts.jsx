@@ -12,6 +12,7 @@ const SellerProducts = () => {
     const fetchUserProducts = async() => {
         const result = await getUserProducts(user._id,dispatch);
         setProducts(result.data);
+        console.log(result.data, "this is user products fetching again");
     }
 
     useEffect(() => {

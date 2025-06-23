@@ -9,7 +9,7 @@ const SubCategoryCard = ({item,categoryId}) => {
   
  
   const handelSubCategoryProduct = async() => {
-    const result = await getAllSubCategoriesProduct(item._id);
+    const result = await getAllSubCategoriesProduct(item._id, dispatch);
         if (result) {
             dispatch(setSubCategory(result.data));
             dispatch(setFilteredProduct(result.data.product))

@@ -136,16 +136,15 @@ const Navbar = () => {
 
 
   const handelSubCategoryProduct = async (item) => {
-    const result = await getAllSubCategoriesProduct(item._id);
+    const result = await getAllSubCategoriesProduct(item._id, dispatch);
     if (result) {
       dispatch(setSubCategory(result.data));
-      dispatch(setFilteredProduct(result.data.product))
-      dispatch(setTotalProduct(result.data.product))
-      localStorage.setItem("allProduct", JSON.stringify(result.data.product))
-      setToggled(false)
+      dispatch(setFilteredProduct(result.data.product));
+      dispatch(setTotalProduct(result.data.product));
+      localStorage.setItem("allProduct", JSON.stringify(result.data.product));
+      setToggled(false);
     }
-  }
-
+  };
 
   // handleSerch input
   useEffect(() => {
@@ -153,285 +152,344 @@ const Navbar = () => {
       const data = await serachProduct(userInput);
       if (data) {
         // console.log(data.shouses,"this is serach data")
-        setSearchOutputs(data.shouses)
+        setSearchOutputs(data.shouses);
       }
-    }
+    };
 
     if (userInput) {
-      setSearchOutputs([])
+      setSearchOutputs([]);
     }
 
     if (userInput) {
       fetchProduct();
     }
-  }, [userInput])
-
+  }, [userInput]);
 
   useEffect(() => {
     fetchAllCategory();
-  }, [])
+  }, []);
 
   return (
-    <div className='border-b border-blue-100 nav-shadow py-1'>
-      <div className='flex flex-row items-center justify-between h-20 w-11/12 mx-auto ' >
-
+    <div className="border-b border-blue-100 nav-shadow py-1">
+      <div className="flex flex-row items-center justify-between h-20 w-11/12 mx-auto ">
         <Link to={"/"}>
-          <div className='flex flex-col  items-center justify-center'>
-            <img width={70} src={logo} />
-            <h1 className='text-2xl  font-semibold text-blue-500'>shouseDekho.com</h1>
+          <div className="flex flex-col  items-center justify-center">
+            {/* logo image */}
+            <h1 className="text-2xl  font-semibold text-blue-500">
+              Gifty_Shop_2
+            </h1>
           </div>
         </Link>
 
-        <div className='hidden xl:flex flex-row gap-10 w-10/12 justify-between px-4'>
-
+        <div className="hidden xl:flex flex-row gap-10 w-10/12 justify-between px-4">
           <input
             onChange={(e) => setUserInput(e.target.value)}
             value={userInput}
-            placeholder="Search For Product, Brands By Name"
+            placeholder="Search For Products By Name"
             class="w-full max-w-[40rem] h-10 py-1 relative rounded-md bg-slate-300 flex items-center justify-center border border-solid px-5 outline-none sm:w-3/4 md:w-3/5 lg:w-1/2"
           />
 
-          <div ref={searchBoxRef}
-            className='absolute'>
-            <Intelligence searchOutputs={searchOutputs} setSearchOutputs={setSearchOutputs} />
+          <div ref={searchBoxRef} className="absolute">
+            <Intelligence
+              searchOutputs={searchOutputs}
+              setSearchOutputs={setSearchOutputs}
+            />
           </div>
 
-
-          <div className='flex relative group cursor-pointer items-center flex-row gap-1  justify-center '>
+          <div className="flex relative group cursor-pointer items-center flex-row gap-1  justify-center ">
             <p>Categories</p>
             <AiOutlineDown />
             <div className="w-20 absolute  bg-slate-300  invisible left-[50%] top-[50%] z-[1000] flex  translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900  transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em]  lg:w-[300px]">
               <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-slate-300"></div>
-              {
-                !categories ? <div className=' flex items-center justify-center'>Loading...</div>
-                  : <div >
-                    {
-                      categories.map((category,index) => {
-                        return <div key={index}
-                        className='hover:bg-slate-400 anuj py-4 px-4 rounded-md relative'>
-                          <div
-                            className='flex justify-between '>
-                            {category.categoryName}
-                            <p className='text-2xl'>  <HiArrowLongRight /></p>
-                          </div>
-                          <div className='absolute p-4 rounded-md bg-slate-300 subCategories'>
-                            {
-                              category.subCategories
-                                .map((subCategory) => {
-                                  return <Link to={`/products/${category._id}/${subCategory._id}`}>
-                                    <div onClick={() => handelSubCategoryProduct(subCategory)}
-                                      className='hover:bg-slate-400  py-4 px-4 rounded-md relative'>
-                                      {subCategory.name}
-                                    </div>
-                                  </Link >
-                                })
-                            }
-                          </div>
+              {!categories ? (
+                <div className=" flex items-center justify-center">
+                  Loading...
+                </div>
+              ) : (
+                <div>
+                  {categories.map((category, index) => {
+                    return (
+                      <div
+                        key={index}
+                        className="hover:bg-slate-400 anuj py-4 px-4 rounded-md relative"
+                      >
+                        <div className="flex justify-between ">
+                          {category.categoryName}
+                          <p className="text-2xl">
+                            {" "}
+                            <HiArrowLongRight />
+                          </p>
                         </div>
-                      })
-                    }
-                  </div>
-              }
+                        <div className="absolute p-4 rounded-md bg-slate-300 subCategories">
+                          {category.subCategories.map((subCategory) => {
+                            return (
+                              <Link
+                                to={`/products/${category._id}/${subCategory._id}`}
+                              >
+                                <div
+                                  onClick={() =>
+                                    handelSubCategoryProduct(subCategory)
+                                  }
+                                  className="hover:bg-slate-400  py-4 px-4 rounded-md relative"
+                                >
+                                  {subCategory.name}
+                                </div>
+                              </Link>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
 
-
-          <div
-            className='flex relative  hover:text-neutral-500 items-center flex-row   justify-center '>
-            <p>{user && user.accountType === "Seller" && 
-                <div className='flex flex-row gap-1 items-center'>
-                  <p className='text-2xl font-bold '><LiaUser /></p>
-                  <p className='font-bold'>Hello!  Admin</p>
+          <div className="flex relative  hover:text-neutral-500 items-center flex-row   justify-center ">
+            <p>
+              {user && user.accountType === "Seller" && (
+                <div className="flex flex-row gap-1 items-center">
+                  <p className="text-2xl font-bold ">
+                    <LiaUser />
+                  </p>
+                  <p className="font-bold">Hello! Admin</p>
                 </div>
-              }</p>
+              )}
+            </p>
           </div>
 
-          <div className='flex gap-2  items-center relative'>
-            {
-              !token && <p className='hover:text-neutral-500 leading-snug'>
-                <Link to={"/login"}> Log in
-                </Link>
+          <div className="flex gap-2  items-center relative">
+            {!token && (
+              <p className="hover:text-neutral-500 leading-snug">
+                <Link to={"/login"}> Log in</Link>
               </p>
-            }
-            {
-              !token && <p className='bg-blue-500 hover:bg-blue-700 font-bold text-white px-4 py-2 rounded-full'>
-                <Link to={"/signup"}> sign up
-                </Link>
+            )}
+            {!token && (
+              <p className="bg-blue-500 hover:bg-blue-700 font-bold text-white px-4 py-2 rounded-full">
+                <Link to={"/signup"}> sign up</Link>
               </p>
-            }
+            )}
             {/* cart */}
-            {
-              token && <p className='text-2xl'>
-                {
-                  cart.length > 0 ? <div className='w-5 h-5 bg-red-500 rounded-full absolute -top-1 left-3'>
-                    <p className='text-white text-xs flex items-center justify-center'> {cart.length}</p>
+            {token && (
+              <p className="text-2xl">
+                {cart.length > 0 ? (
+                  <div className="w-5 h-5 bg-red-500 rounded-full absolute -top-1 left-3">
+                    <p className="text-white text-xs flex items-center justify-center">
+                      {" "}
+                      {cart.length}
+                    </p>
                   </div>
-                    : ""
-                }
-                {
-                  user.accountType === "Seller" ? ""
-                    : <Link to={"/cart"}> <AiOutlineShoppingCart /></Link>
-                }
+                ) : (
+                  ""
+                )}
+                {user.accountType === "Seller" ? (
+                  ""
+                ) : (
+                  <Link to={"/cart"}>
+                    {" "}
+                    <AiOutlineShoppingCart />
+                  </Link>
+                )}
               </p>
-            }
+            )}
 
-            {
-              user && <div>
-                <div onClick={() => setShowUserLinks(!showUserLinks)}
-                  className='w-[35px] h-[35px] object-cover cursor-pointer rounded-full '>
-                  <img ref={userLinksRef}
-                    className='rounded-full w-[35px] h-[35px] object-cover' src={user.image} />
+            {user && (
+              <div>
+                <div
+                  onClick={() => setShowUserLinks(!showUserLinks)}
+                  className="w-[35px] h-[35px] object-cover cursor-pointer rounded-full "
+                >
+                  <img
+                    ref={userLinksRef}
+                    className="rounded-full w-[35px] h-[35px] object-cover"
+                    src={user.image}
+                  />
                 </div>
 
                 {/* links */}
-                {
-                  showUserLinks &&
-                  <div
-                    className='relative w-full  -translate-x-[130px] z-50 hidden lg:block '>
-                    {
-                      user.accountType === "Buyer"
-                        ? <div className='p-3 rounded-md bg-slate-400 absolute z-50 w-[150px]'>
-                          {
-                            buyerLinks.map((links) => {
-                              return <Link to={links.link} >
-                                <div onClick={() => setShowUserLinks(!showUserLinks)}
-                                  className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-500 rounded-md'
-                                  key={links.id}
-                                >
-                                  <p>{links.name}</p>
-                                  <p>{links.icon}</p>
-                                </div>
-                              </Link>
-                            })
-                          }
-                          <div onClick={() => logout(dispatch, navigate)}
-                            className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md'>
-                            <p>Logout</p>
-                            <p><BiLogOut /></p>
-                          </div>
-                        </div>
-                        : <div className=''>
-                          {
-                            <div className='p-3 rounded-md bg-slate-300 flex flex-col gap-1 border absolute z-50 w-[190px]'>
-                              {
-                                sellerLikns.map((links) => {
-                                  return <Link to={links.link}>
-                                    <div onClick={() => setShowUserLinks(!showUserLinks)}
-                                      className='flex border flex-row gap-2 p-1 items-center justify-start hover:bg-slate-400 rounded-md'
-                                      key={links.id}>
-                                      <p>{links.icon}</p>
-                                       <p>{links.name}</p>
-                                    </div>
-                                  </Link>
-                                })
-                              }
-                              <div onClick={() => logout(dispatch, navigate)}
-                                className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md'>
-                                <p>Logout</p>
-                                <p><BiLogOut /></p>
+                {showUserLinks && (
+                  <div className="relative w-full  -translate-x-[130px] z-50 hidden lg:block ">
+                    {user.accountType === "Buyer" ? (
+                      <div className="p-3 rounded-md bg-slate-400 absolute z-50 w-[150px]">
+                        {buyerLinks.map((links) => {
+                          return (
+                            <Link to={links.link}>
+                              <div
+                                onClick={() => setShowUserLinks(!showUserLinks)}
+                                className="flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-500 rounded-md"
+                                key={links.id}
+                              >
+                                <p>{links.name}</p>
+                                <p>{links.icon}</p>
                               </div>
-                            </div>
-
-                          }
+                            </Link>
+                          );
+                        })}
+                        <div
+                          onClick={() => logout(dispatch, navigate)}
+                          className="flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md"
+                        >
+                          <p>Logout</p>
+                          <p>
+                            <BiLogOut />
+                          </p>
                         </div>
-                    }
+                      </div>
+                    ) : (
+                      <div className="">
+                        {
+                          <div className="p-3 rounded-md bg-slate-300 flex flex-col gap-1 border absolute z-50 w-[190px]">
+                            {sellerLikns.map((links) => {
+                              return (
+                                <Link to={links.link}>
+                                  <div
+                                    onClick={() =>
+                                      setShowUserLinks(!showUserLinks)
+                                    }
+                                    className="flex border flex-row gap-2 p-1 items-center justify-start hover:bg-slate-400 rounded-md"
+                                    key={links.id}
+                                  >
+                                    <p>{links.icon}</p>
+                                    <p>{links.name}</p>
+                                  </div>
+                                </Link>
+                              );
+                            })}
+                            <div
+                              onClick={() => logout(dispatch, navigate)}
+                              className="flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md"
+                            >
+                              <p>Logout</p>
+                              <p>
+                                <BiLogOut />
+                              </p>
+                            </div>
+                          </div>
+                        }
+                      </div>
+                    )}
                   </div>
-                }
+                )}
               </div>
-            }
+            )}
           </div>
         </div>
         {/* mobile device */}
-        <div className='xl:hidden flex flex-row gap-4 items-center justify-center'>
-          {
-            !token && <p className='hover:text-neutral-500 text-black'>
-              <Link to={"/login"}> Log in
-              </Link>
+        <div className="xl:hidden flex flex-row gap-4 items-center justify-center">
+          {!token && (
+            <p className="hover:text-neutral-500 text-black">
+              <Link to={"/login"}> Log in</Link>
             </p>
-          }
+          )}
           {/* mobile  cart  */}
 
-          {
-            token && <p className='text-2xl'>
-              {
-                cart.length > 0 ? <div className='w-5 h-5 bg-red-500 rounded-full absolute z-20 -translate-y-3 translate-x-2'>
-                  <p className='text-white text-xs flex items-center justify-center'> {cart.length}</p>
+          {token && (
+            <p className="text-2xl">
+              {cart.length > 0 ? (
+                <div className="w-5 h-5 bg-red-500 rounded-full absolute z-20 -translate-y-3 translate-x-2">
+                  <p className="text-white text-xs flex items-center justify-center">
+                    {" "}
+                    {cart.length}
+                  </p>
                 </div>
-                  : ""
-              }
-              {
-                user.accountType === "Seller" ? ""
-                  : <Link to={"/cart"}>
-                    <p className='relative'> <AiOutlineShoppingCart /></p>
-                  </Link>
-              }
+              ) : (
+                ""
+              )}
+              {user.accountType === "Seller" ? (
+                ""
+              ) : (
+                <Link to={"/cart"}>
+                  <p className="relative">
+                    {" "}
+                    <AiOutlineShoppingCart />
+                  </p>
+                </Link>
+              )}
             </p>
-          }
+          )}
 
-
-
-          <p onClick={() => setToggled(!toggled)}
-            className='text-2xl cursor-pointer'><RxHamburgerMenu /></p>
+          <p
+            onClick={() => setToggled(!toggled)}
+            className="text-2xl cursor-pointer"
+          >
+            <RxHamburgerMenu />
+          </p>
         </div>
-
       </div>
       {/* mobile device serach box */}
-      <div className='w-11/12 mx-auto xl:hidden block'>
+      <div className="w-11/12 mx-auto xl:hidden block">
         <input
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Search For Product ,Brands By Name"
-          className='w-full h-10 py-1 relative  rounded-md bg-slate-300 flex  items-center justify-centere border border-solid px-5 outline-none'
+          className="w-full h-10 py-1 relative  rounded-md bg-slate-300 flex  items-center justify-centere border border-solid px-5 outline-none"
         />
 
-        <Intelligence searchOutputs={searchOutputs} setSearchOutputs={setSearchOutputs} />
+        <Intelligence
+          searchOutputs={searchOutputs}
+          setSearchOutputs={setSearchOutputs}
+        />
       </div>
 
-
       {/* mobilnav */}
-      <div className='absolute' style={{ display: 'flex', height: '100%', }}>
-        <Sidebar backgroundColor='white'
-          onBackdropClick={() => setToggled(false)} toggled={toggled} breakPoint="always">
-
+      <div className="absolute" style={{ display: "flex", height: "100%" }}>
+        <Sidebar
+          backgroundColor="white"
+          onBackdropClick={() => setToggled(false)}
+          toggled={toggled}
+          breakPoint="always"
+        >
           <Link to={"/"}>
-            <div className='flex py-4 border-b flex-col  items-center justify-center'>
+            <div className="flex py-4 border-b flex-col  items-center justify-center">
               <img width={70} src={logo} />
-              <h1 className='text-2xl  font-semibold text-blue-500'>shouseDekho.com</h1>
+              <h1 className="text-2xl  font-semibold text-blue-500">
+                shouseDekho.com
+              </h1>
             </div>
           </Link>
 
           <Menu>
-            <p className='text-sm px-3 pt-2 text-black font-bold'>Categories</p>
+            <p className="text-sm px-3 pt-2 text-black font-bold">Categories</p>
 
-            {
-              categories ?
-                categories.map((category) => {
-                  return <SubMenu label={category.categoryName}>
-                    {
-                      category.subCategories
-                        .map((subCategory) => {
-                          return <Link to={`/products/${category._id}/${subCategory._id}`}>
-                            <MenuItem onClick={() => handelSubCategoryProduct(subCategory)}
-                            > {subCategory.name}</MenuItem>
-                          </Link>
-                        })
-                    }
+            {categories ? (
+              categories.map((category) => {
+                return (
+                  <SubMenu label={category.categoryName}>
+                    {category.subCategories.map((subCategory) => {
+                      return (
+                        <Link
+                          to={`/products/${category._id}/${subCategory._id}`}
+                        >
+                          <MenuItem
+                            onClick={() =>
+                              handelSubCategoryProduct(subCategory)
+                            }
+                          >
+                            {" "}
+                            {subCategory.name}
+                          </MenuItem>
+                        </Link>
+                      );
+                    })}
                   </SubMenu>
-                })
-                : <div className='custom-loader'></div>
-            }
+                );
+              })
+            ) : (
+              <div className="custom-loader"></div>
+            )}
 
-            <p className='text-sm px-3 pt-2 text-black font-bold'>Pages</p>
+            <p className="text-sm px-3 pt-2 text-black font-bold">Pages</p>
 
-            {
-              token ?
-                <div>
-                  {
-                    user.accountType === "Buyer" ?
-                      buyerLinks.map((links) => {
-                        return <MenuItem>
+            {token ? (
+              <div>
+                {user.accountType === "Buyer"
+                  ? buyerLinks.map((links) => {
+                      return (
+                        <MenuItem>
                           <Link to={links.link}>
-                            <div onClick={() => setToggled(false)}
-                              className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-500 rounded-md'
+                            <div
+                              onClick={() => setToggled(false)}
+                              className="flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-500 rounded-md"
                               key={links.id}
                             >
                               <p>{links.name}</p>
@@ -439,64 +497,80 @@ const Navbar = () => {
                             </div>
                           </Link>
                         </MenuItem>
-                      })
-
-                      : sellerLikns.map((links) => {
-                        return <MenuItem>
+                      );
+                    })
+                  : sellerLikns.map((links) => {
+                      return (
+                        <MenuItem>
                           <Link to={links.link}>
-                            <div onClick={() => setToggled(false)}
-                              className='flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md'
-                              key={links.id}>
+                            <div
+                              onClick={() => setToggled(false)}
+                              className="flex flex-row gap-2 p-2 items-center justify-start hover:bg-slate-400 rounded-md"
+                              key={links.id}
+                            >
                               <p>{links.name}</p>
                               <p>{links.icon}</p>
                             </div>
                           </Link>
                         </MenuItem>
-                      })
-
-                  }
-                </div>
-                :
-                <div>
-                  <MenuItem onClick={() => {
-                    navigate("/login")
-                    setToggled(false)
-                  }} >
-                    Log in
-                  </MenuItem>
-                  <MenuItem onClick={() => {
-                    navigate("/signup")
-                    setToggled(false)
-                  }}>
-                    Signup
-                  </MenuItem>
-                </div>
-            }
-
-            {
-              token && <div>
-                <p className='text-sm px-3 pt-2 text-black font-bold'>My Stuf</p>
-                <Link to={'/cart'} onClick={() => setToggled(false)}> <MenuItem>Cart</MenuItem></Link>
-                <Link to={'/wishlist'} onClick={() => setToggled(false)}> <MenuItem>Wishlist</MenuItem></Link>
+                      );
+                    })}
               </div>
-            }
+            ) : (
+              <div>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/login");
+                    setToggled(false);
+                  }}
+                >
+                  Log in
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/signup");
+                    setToggled(false);
+                  }}
+                >
+                  Signup
+                </MenuItem>
+              </div>
+            )}
 
-            {
-              token && <MenuItem onClick={() => {
-                logout(dispatch, navigate)
-                setToggled(false)
-              }}
-                className='text-center  '>
-                <div className='rounded-md bg-black text-white py-2 '>
+            {token && (
+              <div>
+                <p className="text-sm px-3 pt-2 text-black font-bold">
+                  My Stuf
+                </p>
+                <Link to={"/cart"} onClick={() => setToggled(false)}>
+                  {" "}
+                  <MenuItem>Cart</MenuItem>
+                </Link>
+                <Link to={"/wishlist"} onClick={() => setToggled(false)}>
+                  {" "}
+                  <MenuItem>Wishlist</MenuItem>
+                </Link>
+              </div>
+            )}
+
+            {token && (
+              <MenuItem
+                onClick={() => {
+                  logout(dispatch, navigate);
+                  setToggled(false);
+                }}
+                className="text-center  "
+              >
+                <div className="rounded-md bg-black text-white py-2 ">
                   Logout
                 </div>
               </MenuItem>
-            }
+            )}
           </Menu>
         </Sidebar>
       </div>
     </div>
-  )
+  );
 }
 
 export default Navbar

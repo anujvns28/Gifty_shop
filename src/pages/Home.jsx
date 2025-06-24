@@ -58,26 +58,30 @@ const Home = () => {
             : <div className='w-full h-full flex flex-col gap-2 lg:gap-5'>
              {
             categories.map((category, index) => {
-              return <div key={index}>
-                <p className='text-xl font-semibold italic text-blue-500 my-3'>Best in {category.categoryName}</p>
-                <Swiper
-                  modules={[Navigation, Pagination, Scrollbar, Autoplay]}
-                  navigation
-                  spaceBetween={10}
-                  slidesPerView={ viewport < 500 ? 1.2 : 4}
-                >
-                  {
-                    category.subCategories
-                    .map((item,index) => (
+              return (
+                <div key={index}>
+                  <p className="text-xl font-semibold italic text-blue-500 my-3">
+                    Best in {category.categoriesName}
+                  </p>
+                  <Swiper
+                    modules={[Navigation, Pagination, Scrollbar, Autoplay]}
+                    navigation
+                    spaceBetween={10}
+                    slidesPerView={viewport < 500 ? 1.2 : 4}
+                  >
+                    {category.subCategories.map((item, index) => (
                       <div key={index}>
                         <SwiperSlide>
-                          <SubCategoryCard item={item} categoryId={category._id} />
+                          <SubCategoryCard
+                            item={item}
+                            categoryId={category._id}
+                          />
                         </SwiperSlide>
                       </div>
-                    ))
-                  }
-                </Swiper>
-              </div>
+                    ))}
+                  </Swiper>
+                </div>
+              );
             })
           }
             </div>

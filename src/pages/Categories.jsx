@@ -6,7 +6,10 @@ import {
   FiChevronDown,
   FiPlus,
 } from "react-icons/fi";
-import { deleteCategory, getAllCategories } from "../service/operation/category";
+import {
+  deleteCategory,
+  getAllCategories,
+} from "../service/operation/category";
 import AddCategories from "../components/core/categories/AddCategories";
 import Modal from "../components/common/Modal";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,7 +21,7 @@ const Categories = () => {
   const [categories, setCategories] = useState();
   const [openCategoryFrom, setOpenCategoryForm] = useState(false);
   const [deleteModal, setDeleteModal] = useState();
-  const {productLoading} = useSelector((state) => state.product);
+  const { productLoading } = useSelector((state) => state.product);
   const [isEdit, setIsEdit] = useState(false);
   const [categoryData, setCategoryData] = useState(null);
   const [openSubCategoryForm, setOpenSubCategoryForm] = useState(false);
@@ -26,11 +29,8 @@ const Categories = () => {
   const [isEditSubCategory, setIsEditSubCategory] = useState(false);
   const [presentCategoryId, setPresentCategoryId] = useState(null);
 
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   const fetchCategories = async () => {
     const result = await getAllCategories();
@@ -42,40 +42,37 @@ const Categories = () => {
   };
 
   const handleDelete = async (categoryId) => {
-    await deleteCategory(categoryId,dispatch);
+    await deleteCategory(categoryId, dispatch);
     fetchCategories();
     setDeleteModal(null);
-  }
-
+  };
 
   const handleEdit = (category) => {
     setIsEdit(true);
     setCategoryData(category);
     setOpenCategoryForm(true);
-  }
+  };
 
-    const handleEditSubCategory = (subCategory) => {
-        setIsEditSubCategory(true);
-        setSubCategoryData(subCategory);    
-        setOpenSubCategoryForm(true);
-    }
+  const handleEditSubCategory = (subCategory) => {
+    setIsEditSubCategory(true);
+    setSubCategoryData(subCategory);
+    setOpenSubCategoryForm(true);
+  };
 
-    const handleAddSubCategory = (categoryId) => {
-         setPresentCategoryId(categoryId);
-         setOpenSubCategoryForm(true);
-    }
+  const handleAddSubCategory = (categoryId) => {
+    setPresentCategoryId(categoryId);
+    setOpenSubCategoryForm(true);
+  };
 
-    const handleDeleteSubCategory = async(subCategoryId) => {
-        await deleteSubCategory(subCategoryId,dispatch);
-        fetchCategories();
-        setDeleteModal(null);   
-    }
+  const handleDeleteSubCategory = async (subCategoryId) => {
+    await deleteSubCategory(subCategoryId, dispatch);
+    fetchCategories();
+    setDeleteModal(null);
+  };
 
   useEffect(() => {
     fetchCategories();
   }, []);
-
-  
 
   if (!categories || productLoading) {
     return (
@@ -112,8 +109,10 @@ const Categories = () => {
                   </div>
 
                   <div className="flex items-center space-x-3">
-                    <FiEdit onClick={() => handleEdit(category)}
-                    className="text-green-600 cursor-pointer hover:text-green-800" />
+                    <FiEdit
+                      onClick={() => handleEdit(category)}
+                      className="text-green-600 cursor-pointer hover:text-green-800"
+                    />
 
                     <FiTrash
                       onClick={() =>
@@ -132,12 +131,16 @@ const Categories = () => {
                 </summary>
 
                 {/* Subcategories */}
-                <div 
-                className="mt-4 space-y-3 pl-6 border-l-2 border-gray-200">
+                <div className="mt-4 space-y-3 pl-6 border-l-2 border-gray-200">
                   {category.subCategories.map((subCategory) => {
                     return (
-                      <div onClick={() => navigate(`/sub-categories/${subCategory._id}`)}
-                      className="mt-4 cursor-pointer space-y-3 pl-6 border-l-2 border-gray-400">
+                      <div
+                        key={subCategory._id}
+                        onClick={() =>
+                          navigate(`/sub-categories/${subCategory._id}`)
+                        }
+                        className="mt-4 cursor-pointer space-y-3 pl-6 border-l-2 border-gray-400"
+                      >
                         <div className="flex justify-between items-center bg-gray-100 p-2 rounded-lg hover:bg-gray-200">
                           <div className="flex items-center space-x-3">
                             <img
@@ -150,35 +153,44 @@ const Categories = () => {
                             </span>
                           </div>
                           <div className="flex items-center space-x-2">
-                            <FiEdit onClick={()=>handleEditSubCategory(subCategory)}
-                            className="text-green-700 cursor-pointer hover:text-green-900 w-4 h-4" />
+                            <FiEdit
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent navigation
+                                handleEditSubCategory(subCategory);
+                              }}
+                              className="text-green-700 cursor-pointer hover:text-green-900 w-4 h-4"
+                            />
 
-                            <FiTrash 
-                            onClick={() =>
-                              setDeleteModal({
-                                text1: "Delete Subcategory",
-                                text2: "Are you sure want to Delete?",
-                                btn1: "Cancle",
-                                btn2: "Delete",
-                                handler1: () => setDeleteModal(null),
-                                handler2: () =>
-                                  handleDeleteSubCategory(subCategory._id),
-                              })
-                            }
-                            className="text-red-700 cursor-pointer hover:text-red-900 w-4 h-4" />
+                            <FiTrash
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent navigation
+                                setDeleteModal({
+                                  text1: "Delete Subcategory",
+                                  text2: "Are you sure want to Delete?",
+                                  btn1: "Cancle",
+                                  btn2: "Delete",
+                                  handler1: () => setDeleteModal(null),
+                                  handler2: () =>
+                                    handleDeleteSubCategory(subCategory._id),
+                                });
+                              }}
+                              className="text-red-700 cursor-pointer hover:text-red-900 w-4 h-4"
+                            />
                           </div>
                         </div>
                       </div>
                     );
                   })}
                 </div>
+
                 {/* Add Subcategory Button */}
-                <div 
-                className="mt-4">
-                  <button onClick={()=>handleAddSubCategory(category._id)}
-                  className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-medium">
+                <div className="mt-4">
+                  <button
+                    onClick={() => handleAddSubCategory(category._id)}
+                    className="flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-medium"
+                  >
                     <FiPlus />
-                    <span>Add  Subcategory</span>
+                    <span>Add Subcategory</span>
                   </button>
                 </div>
               </details>
@@ -191,20 +203,22 @@ const Categories = () => {
           setOpenCategoryForm={setOpenCategoryForm}
           fetchCategories={fetchCategories}
           categoryData={categoryData}
-            isEdit={isEdit}
+          isEdit={isEdit}
         />
       )}
       {deleteModal && <Modal modalData={deleteModal} />}
 
-      {openSubCategoryForm && <AddSubCategory 
-      fetchCategories={fetchCategories}
-      parsentCategoryId={presentCategoryId}
-      setOpenSubCategoryForm={setOpenSubCategoryForm} 
-        subCategoryData={subCategoryData}
-        isEdit={isEditSubCategory}
-        setIsEdit={setIsEditSubCategory}
-        setSubCategoryData={setSubCategoryData}
-      />}
+      {openSubCategoryForm && (
+        <AddSubCategory
+          fetchCategories={fetchCategories}
+          parsentCategoryId={presentCategoryId}
+          setOpenSubCategoryForm={setOpenSubCategoryForm}
+          subCategoryData={subCategoryData}
+          isEdit={isEditSubCategory}
+          setIsEdit={setIsEditSubCategory}
+          setSubCategoryData={setSubCategoryData}
+        />
+      )}
     </div>
   );
 };

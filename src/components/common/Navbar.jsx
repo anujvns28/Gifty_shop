@@ -443,7 +443,7 @@ const Navbar = () => {
             <div className="flex py-4 border-b flex-col  items-center justify-center">
               <img width={70} src={logo} />
               <h1 className="text-2xl  font-semibold text-blue-500">
-                shouseDekho.com
+                Gifty_Shop_2
               </h1>
             </div>
           </Link>
@@ -454,7 +454,7 @@ const Navbar = () => {
             {categories ? (
               categories.map((category) => {
                 return (
-                  <SubMenu label={category.categoryName}>
+                  <SubMenu label={category.categoriesName}>
                     {category.subCategories.map((subCategory) => {
                       return (
                         <Link

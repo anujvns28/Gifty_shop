@@ -214,7 +214,7 @@ const Navbar = () => {
                         className="hover:bg-slate-400 anuj py-4 px-4 rounded-md relative"
                       >
                         <div className="flex justify-between ">
-                          {category.categoryName}
+                          {category.categoriesName}
                           <p className="text-2xl">
                             {" "}
                             <HiArrowLongRight />
@@ -441,7 +441,6 @@ const Navbar = () => {
         >
           <Link to={"/"}>
             <div className="flex py-4 border-b flex-col  items-center justify-center">
-              <img width={70} src={logo} />
               <h1 className="text-2xl  font-semibold text-blue-500">
                 Gifty_Shop_2
               </h1>

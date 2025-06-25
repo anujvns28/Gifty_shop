@@ -47,55 +47,66 @@ exports.gender = [
   exports.ProColor = [
     {
       id: 1,
-      color: 'bg-purple-700 ',
-      colorName: "Purple"
+      color: "bg-purple-700",
+      colorName: "Purple",
     },
     {
       id: 1,
-      color: 'bg-red-700',
-      colorName: "Red"
+      color: "bg-red-700",
+      colorName: "Red",
     },
     {
       id: 1,
-      color: 'bg-black',
-      colorName: "Black"
+      color: "bg-black",
+      colorName: "Black",
     },
     {
       id: 1,
-      color: 'bg-blue-500',
-      colorName: "Blue"
+      color: "bg-blue-500",
+      colorName: "Blue",
     },
     {
       id: 1,
-      color: 'bg-white',
-      colorName: "White"
+      color: "bg-white",
+      colorName: "White",
     },
     {
       id: 1,
-      color: 'bg-amber-700',
-      colorName: "Brown"
+      color: "bg-amber-700",
+      colorName: "Brown",
     },
     {
       id: 1,
-      color: 'bg-green-700',
-      colorName: "Green"
+      color: "bg-green-700",
+      colorName: "Green",
     },
     {
       id: 1,
-      color: 'bg-gray-700',
-      colorName: "Gray"
+      color: "bg-gray-700",
+      colorName: "Gray",
     },
     {
       id: 1,
-      color: 'bg-pink-700',
-      colorName: "Pink"
+      color: "bg-pink-700",
+      colorName: "Pink",
     },
     {
       id: 1,
-      color: 'bg-yellow-500',
-      colorName: "Yellow"
+      color: "bg-yellow-500",
+      colorName: "Yellow",
     },
-  ]
+    {
+      id: 1,
+      color: "bg-[#C0C0C0]",
+      colorName: "Silver",
+    },
+    {
+      id: 1,
+      color: "bg-[#FFD700]",
+      colorName: "Golden",
+    },
+  ];
+
 
   exports.proRating = [
     {

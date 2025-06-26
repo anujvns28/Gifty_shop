@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { paymentEndpoints } from "../api";
 import { apiConnector } from "../apiconnecter";
-import rzpLogo from "../../assets/logo.svg"
+import rzpLogo from "../../assets/Resinart_Logo.png";
 
 
 

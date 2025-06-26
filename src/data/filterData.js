@@ -20,29 +20,29 @@ exports.gender = [
   exports.ProPrice = [
     {
       id: 1,
-      price: "Under-1500"
+      price: "Under-200",
     },
     {
       id: 1,
-      price: "1500-3500"
+      price: "200-500",
     },
     {
       id: 1,
-      price: "3500-7000"
+      price: "500-800",
     },
     {
       id: 1,
-      price: "7000-10500"
+      price: "800-1000",
     },
     {
       id: 1,
-      price: "10500-15000"
+      price: "1000-2000",
     },
     {
       id: 1,
-      price: "30000-Over"
+      price: "20000-Over",
     },
-  ]
+  ];
 
   exports.ProColor = [
     {

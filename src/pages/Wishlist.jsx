@@ -21,9 +21,9 @@ const Wishlist = () => {
           <div className="w-full flex min-h-[60vh] lg:min-h-[80vh] flex-col items-center justify-center">
             <h1 className="font-bold text-2xl">Gifty_shop_2</h1>
             <h1 className="text-xl font-semibold">
-              No Shouse found in your Wishlist!
+              No Product found in your Wishlist!
             </h1>
-            <p>Add a Shouse in Wishlist.</p>
+            <p>Add a Porduct in Wishlist.</p>
           </div>
         ) : (
           <div className="w-full h-full flex flex-col gap-4">
@@ -48,7 +48,7 @@ const Wishlist = () => {
                       </p>
                       <p className="font-semibold">Price : {product.price}</p>
                       <p className=" font-semibold">
-                        {product.forWhom}'s Shouse
+                        {product.forWhom}'s Product
                       </p>
                     </div>
                   </div>

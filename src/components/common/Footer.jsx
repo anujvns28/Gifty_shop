@@ -1,66 +1,54 @@
-import React from 'react'
-import {ImLinkedin} from "react-icons/im"
-import {BsInstagram} from "react-icons/bs"
-import {BsGithub} from "react-icons/bs"
-import {BsTwitter} from "react-icons/bs"
-import { Link } from 'react-router-dom'
+import React from "react";
+import { BsInstagram } from "react-icons/bs";
 
 const Footer = () => {
-   
-    return (
-        <div className='w-full bg-black  text-white  pt-14'>
-            <div className='flex justify-between w-full px-2 sm:px-20 '>
-                <div className='flex w-full sm:w-[45%] justify-between'>
-                    <div className='sm:text-xl text-sm font-semibold flex flex-col gap-2'>
-                        <h1>FIND A  STORE</h1>
-                        <h1>BECOME A MEMBER</h1>
-                        <h1>Send Us Feedback</h1>
-                        <h1>STUDENT DISCOUNT</h1>
-                    </div>
-
-                    <div className='flex flex-col gap-3'>
-                        <h1 className='font-xl font-semibold'>GET HELP</h1>
-                        <p className='text-xs text-gray-400 font-normal'>Order Status</p>
-                        <p className='text-xs text-gray-400 font-normal'>Delivary</p>
-                        <p className='text-xs text-gray-400 font-normal'>Returns</p>
-                        <p className='text-xs text-gray-400 font-normal'>Payment Opetion</p>
-                        <p className='text-xs text-gray-400 font-normal'>anujvns27@gmail.com</p>
-                        <p className='text-xs text-gray-400 font-normal'>anujvns28@gmail.com</p>
-                    </div>
-
-                    <div className='flex flex-col gap-3'>
-                        <h1 className='font-xl font-semibold'>ABOUT US</h1>
-                        <p className='text-xs text-gray-400 font-normal'>News</p>
-                        <p className='text-xs text-gray-400 font-normal'>Carreer</p>
-                        <p className='text-xs text-gray-400 font-normal'>Investors</p>
-                        <p className='text-xs text-gray-400 font-normal'>sustainability</p>
-                    </div>
-                </div>
-
-                <div className='hidden sm:flex flex-row gap-3 text-xl'>
-                 <Link> <ImLinkedin/></Link>
-                 <Link> <BsGithub/></Link>
-                 <Link> <BsTwitter/></Link>
-                  <Link><BsInstagram/></Link>
-                </div>
-            </div>
-            <div className='flex sm:flex-row flex-col gap-2 justify-between sm:px-20 px-5 pt-5 sm:pt-14 pb-2'>
-                <div className='flex flex-row gap-2'>
-                    <p className='text-xs font-normal'>India  </p>
-                    <p className='text-xs text-gray-400 font-normal'>© 2023 Nike, Inc. All Rights Reserved</p>
-                </div>
-
-                <div className='flex flex-row gap-3'>
-                    <p className='text-xs text-gray-400 font-normal'>Guides</p>
-                    <p className='text-xs text-gray-400 font-normal'>Terms of Sale</p>
-                    <p className='text-xs text-gray-400 font-normal'>Terms of Use</p>
-                    <p className='text-xs text-gray-400 font-normal'>Nike Privacy Police</p>
-                </div>
-
-            </div>
-
+  return (
+    <div className="w-full bg-black text-white pt-14">
+      {/* Top Section */}
+      <div className="w-full px-5 sm:px-20 flex flex-col sm:flex-row justify-between gap-10">
+        {/* Contact Info */}
+        <div className="flex flex-col gap-4 sm:w-[60%]">
+          <h1 className="text-lg font-semibold">CONTACT INFORMATION</h1>
+          <p className="text-sm text-gray-300">Email: giftyshop78@gmail.com</p>
+          <p className="text-sm text-gray-300">
+            Alternate Email: anjuay10102005@gmail.com
+          </p>
+          <p className="text-sm text-gray-300">
+            Phone / WhatsApp: +91 9022007484
+          </p>
+          <p className="text-sm text-gray-300 flex items-center gap-1">
+            Instagram:{" "}
+            <a
+              href="https://www.instagram.com/gifty_shop_2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline text-blue-400 hover:text-pink-400"
+            >
+              @gifty_shop_2
+            </a>
+            <BsInstagram className="text-pink-400" />
+          </p>
         </div>
-    )
-}
 
-export default Footer
+        {/* WhatsApp Payment Note */}
+        <div className="flex flex-col gap-3 sm:w-[40%]">
+          <h1 className="text-lg font-semibold">IMPORTANT NOTE</h1>
+          <p className="text-sm text-gray-300">
+            In case you placed an order with your customised things to be
+            preserved, please share your payment screenshot on WhatsApp number{" "}
+            <strong>9022007484</strong>. The courier address will be shared with
+            you after confirmation.
+          </p>
+        </div>
+      </div>
+
+      {/* Bottom Footer */}
+      <div className="flex flex-col sm:flex-row justify-between sm:px-20 px-5 pt-10 pb-4 text-xs text-gray-400">
+        <p>India</p>
+        <p>© 2025 gifty_shop_2. All rights reserved.</p>
+      </div>
+    </div>
+  );
+};
+
+export default Footer;

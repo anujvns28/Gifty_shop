@@ -1,65 +1,65 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
-import logo from "../assets/logo.svg"
-import { getUserProducts } from '../service/operation/product';
-import OrderCard from '../components/core/myOrder/OrderCard';
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.svg";
+import { getUserProducts } from "../service/operation/product";
+import OrderCard from "../components/core/myOrder/OrderCard";
 
 const MyOrders = () => {
-    const { user, userLoading } = useSelector((state) => state.profile)
-    const [orders, setOrders] = useState();
+  const { user, userLoading } = useSelector((state) => state.profile);
+  const [orders, setOrders] = useState();
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const gettingOrders = async () => {
-        const orders = await getUserProducts(user._id, dispatch);
-        if (orders) {
-            setOrders(orders.data)
-        }
+  const gettingOrders = async () => {
+    const orders = await getUserProducts(user._id, dispatch);
+    if (orders) {
+      setOrders(orders.data);
     }
+  };
 
-    useEffect(() => {
-        gettingOrders()
-    }, [])
+  useEffect(() => {
+    gettingOrders();
+  }, []);
 
-    if (userLoading) {
-        return <div className='h-screen w-screen flex items-center text-black justify-center'>
-            <div className='custom-loader'></div>
-        </div>
-    }
-
-
+  if (userLoading) {
     return (
-        <div className='lg:w-[60%] w-[90%] mx-auto h-full my-7'>
-            {
-                orders
-                    ? <div>
-                        {
-                            orders.length === 0
-                                ? <div className='flex flex-col gap-2 items-center w-full h-full justify-center' >
-                                    <img src={logo} />
-                                    <h1 className='text-xl font-semibold'>Yor Are Not Order Yet!</h1>
-                                    <p>Pleace Buy now</p>
-                                    <div className='px-6 py-4 text-xl mt-5 bg-black rounded-full text-white hover:bg-opacity-80'
-                                    >Buy Now</div>
-                                </div>
-                                : <div className='w-full h-full flex flex-col gap-4'>
-                                    {
-                                        orders.map((product,index) => {
-                                            return <OrderCard product={product} key={index}/>
-                                        })
-                                    }
+      <div className="h-screen w-screen flex items-center text-black justify-center">
+        <div className="custom-loader"></div>
+      </div>
+    );
+  }
 
-                                </div>
-                        }
-                    </div>
-                    : <div ></div>
-            }
-
-
-
+  return (
+    <div className="lg:w-[60%] w-[90%] mx-auto h-full my-7">
+      {orders ? (
+        <div>
+          {orders.length === 0 ? (
+            <div className="flex flex-col gap-2 items-center w-full h-full justify-center">
+              <h className="font-bold text-2xl">Gifty_shop_2</h>
+              <h1 className="text-xl font-semibold">Yor Are Not Order Yet!</h1>
+              <p>Pleace Buy now</p>
+              <div
+                onClick={() => navigate("/")}
+                className="px-6 py-4 cursor-pointer text-xl mt-5 bg-black rounded-full text-white hover:bg-opacity-80"
+              >
+                Buy Now
+              </div>
+            </div>
+          ) : (
+            <div className="w-full h-full flex flex-col gap-4">
+              {orders.map((product, index) => {
+                return <OrderCard product={product} key={index} />;
+              })}
+            </div>
+          )}
         </div>
-    )
-}
+      ) : (
+        <div></div>
+      )}
+    </div>
+  );
+};
 
 export default MyOrders

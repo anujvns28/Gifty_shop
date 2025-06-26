@@ -1,28 +1,36 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { getRatingAndReview, getSignleProductInfo } from '../service/operation/product';
-import { useDispatch, useSelector } from 'react-redux';
-import ProductCard from '../components/common/ProductCard';
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/autoplay';
-import { CategoryInfo } from '../service/operation/category';
-import SubCategoryCard from '../components/common/SubCategoryCard';
-import { size } from '../data/filterData';
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  getRatingAndReview,
+  getSignleProductInfo,
+} from "../service/operation/product";
+import { useDispatch, useSelector } from "react-redux";
+import ProductCard from "../components/common/ProductCard";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/autoplay";
+import { CategoryInfo } from "../service/operation/category";
+import SubCategoryCard from "../components/common/SubCategoryCard";
+import { size } from "../data/filterData";
 import { IoIosArrowDown } from "react-icons/io";
-import ReactStars from 'react-stars'
-import Modal from '../components/common/Modal';
-import { addCartPrice, addToCart, addToWishlist } from '../slice/Product';
-import RatingAndReviewModal from '../components/common/RatingAndReviewModal';
-import { buyShouse } from '../service/operation/payment';
-import AddressModal from '../components/common/AddressModal';
-import { setRecentlyView } from '../slice/user';
+import ReactStars from "react-stars";
+import Modal from "../components/common/Modal";
+import { addCartPrice, addToCart, addToWishlist } from "../slice/Product";
+import RatingAndReviewModal from "../components/common/RatingAndReviewModal";
+import { buyShouse } from "../service/operation/payment";
+import AddressModal from "../components/common/AddressModal";
+import { setRecentlyView } from "../slice/user";
 
 const SingleProduct = () => {
-
   const { productId } = useParams();
   const [productInfo, setProductInfo] = useState();
   const [imageIndex, setImageIndex] = useState(0);
@@ -62,6 +70,7 @@ const SingleProduct = () => {
   // cart functin
   const handleCart = () => {
     if (!user) {
+      console.log("cart");
       setModalData({
         text1: "Login!!",
         text2: "You are not logged in!",
@@ -71,6 +80,10 @@ const SingleProduct = () => {
         handler2: () => navigate("/login"),
       });
       return;
+    } else {
+      const data = { ...productInfo };
+      dispatch(addToCart(data));
+      dispatch(addCartPrice(productInfo.price));
     }
   };
 
@@ -102,6 +115,8 @@ const SingleProduct = () => {
         handler2: () => navigate("/login"),
       });
       return;
+    } else {
+      setShowAddressModal(true);
     }
   };
 
@@ -174,7 +189,7 @@ const SingleProduct = () => {
             <h1 className="lg:text-3xl text-xl font-semibold">
               {productInfo ? productInfo.productName : "Loading..."}
             </h1>
-           
+
             <div className="lg:pt-3 pt-1">
               <p className="font-semibold text-lg">
                 MRP : {productInfo ? productInfo.price : "Loading..."}
@@ -234,8 +249,8 @@ const SingleProduct = () => {
                     delivery 4–9 business days
                   </p>
                   <p>
-                    Orders are processed and delivered Monday–Friday (excluding
-                    public holidays)
+                    Orders are processed and delivered Monday–Saturday
+                    (excluding public holidays)
                   </p>
                   <p>Premimum Members enjoy free returns.</p>
                 </div>
@@ -348,15 +363,31 @@ const SingleProduct = () => {
                 </summary>
                 <div className="font-semibold leading-relaxed">
                   <p className="pt-4">
-                    Declaration of Importer: Direct import by the individual
-                    customer
+                    Declaration: Handmade resin art product, directly sold by
+                    the Gifty_Shop_2.
                   </p>
                   <p className="pt-4">
-                    Marketed by: Nike Global Trading B.V. Singapore Branch, 30
-                    Pasir Panjang Road, #10-31/32, Mapletree Business City,
-                    Singapore 117 440
+                    Marketed by: gifty_shop_2, Agashi Virar West , Mumbai,
+                    Maharashtra - 401303
                   </p>
-                  <p className="font-bold">Net Quantity: 1 Pair</p>
+                  <p className="pt-4">Contact: +91 9022007484</p>
+                  <p className="pt-4">
+                    Care Instructions: Keep away from direct sunlight and water.
+                    Clean with a dry, soft cloth.
+                  </p>
+                  <p className="pt-4">
+                    Return Policy: Eligible for return within 7 days if damaged
+                    during delivery.
+                  </p>
+                  <p className="pt-4">
+                    Note: Customization available on request. Contact for
+                    personalized designs.
+                  </p>
+                  <p className="pt-4">
+                    Disclaimer: Each piece is uniquely handmade. Slight
+                    variations in color and design are natural.
+                  </p>
+                  <p className="font-bold">Net Quantity: 1 handcrafted item</p>
                 </div>
               </details>
             </div>
@@ -526,15 +557,31 @@ const SingleProduct = () => {
               </summary>
               <div className="font-semibold leading-relaxed">
                 <p className="pt-4">
-                  Declaration of Importer: Direct import by the individual
-                  customer
+                  Declaration: Handmade resin art product, directly sold by the
+                  Gifty_Shop_2.
                 </p>
                 <p className="pt-4">
-                  Marketed by: Nike Global Trading B.V. Singapore Branch, 30
-                  Pasir Panjang Road, #10-31/32, Mapletree Business City,
-                  Singapore 117 440
+                  Marketed by: gifty_shop_2, Agashi Virar West , Mumbai,
+                  Maharashtra - 401303
                 </p>
-                <p className="font-bold">Net Quantity: 1 Pair</p>
+                <p className="pt-4">Contact: +91 9022007484</p>
+                <p className="pt-4">
+                  Care Instructions: Keep away from direct sunlight and water.
+                  Clean with a dry, soft cloth.
+                </p>
+                <p className="pt-4">
+                  Return Policy: Eligible for return within 7 days if damaged
+                  during delivery.
+                </p>
+                <p className="pt-4">
+                  Note: Customization available on request. Contact for
+                  personalized designs.
+                </p>
+                <p className="pt-4">
+                  Disclaimer: Each piece is uniquely handmade. Slight variations
+                  in color and design are natural.
+                </p>
+                <p className="font-bold">Net Quantity: 1 handcrafted item</p>
               </div>
             </details>
           </div>
@@ -546,7 +593,7 @@ const SingleProduct = () => {
           {/* relaeatd products */}
           <div>
             <h1 className="text-xl font-semibold italic text-blue-500 my-3">
-              Similar Shouses{" "}
+              Similar Products{" "}
             </h1>
             {allProduct ? (
               <div>
@@ -585,7 +632,7 @@ const SingleProduct = () => {
           {category && (
             <div className="">
               <p className="text-xl font-semibold italic text-blue-500 my-3">
-                Similar Shouses Brands
+                Other related products{" "}
               </p>
               <Swiper
                 modules={[Navigation, Pagination, Scrollbar, Autoplay]}
@@ -627,6 +674,6 @@ const SingleProduct = () => {
       )}
     </div>
   );
-}
+};
 
-export default SingleProduct
+export default SingleProduct;

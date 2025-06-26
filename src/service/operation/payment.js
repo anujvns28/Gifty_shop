@@ -46,22 +46,21 @@ export async function buyShouse(shouses, userDetails,addressId ) {
 
         //options
         const options = {
-            key: process.env.REACT_APP_RAZORPAY_KEY,
-            currency: orderResponse.data.message.currency,
-            amount: `${orderResponse.data.message.amount}`,
-            order_id:orderResponse.data.message.id,
-            name:"shouseDeho.com",
-            description: "Thank You for Purchasing the Shouse",
-            image:rzpLogo,
-            prefill: {
-                name:`${userDetails.firstName}`,
-                email:userDetails.email
-            },
-            handler: function(response) {
-               
-                 verifyPayment({...response, shouses,userId,addressId});
-            }
-        }
+          key: process.env.REACT_APP_RAZORPAY_KEY,
+          currency: orderResponse.data.message.currency,
+          amount: `${orderResponse.data.message.amount}`,
+          order_id: orderResponse.data.message.id,
+          name: "Gifty_shop_2",
+          description: "Thank You for Purchasing the Shouse",
+          image: rzpLogo,
+          prefill: {
+            name: `${userDetails.firstName}`,
+            email: userDetails.email,
+          },
+          handler: function (response) {
+            verifyPayment({ ...response, shouses, userId, addressId });
+          },
+        };
         console.log(options,"this is printing options")
         
         const paymentObject = new window.Razorpay(options);

@@ -28,49 +28,53 @@ export async function buyShouse(shouses, userDetails,addressId ) {
     const userId = userDetails._id
     const toastId = toast.loading("Loading...");
     try{
-        //load the script
-        const res = await loadScript("https://checkout.razorpay.com/v1/checkout.js");
+      //load the script
+      const res = await loadScript(
+        "https://checkout.razorpay.com/v1/checkout.js"
+      );
 
-        if(!res) {
-            toast.error("RazorPay SDK failed to load");
-            return;
-        }
+      if (!res) {
+        toast.error("RazorPay SDK failed to load");
+        return;
+      }
 
-        //initiate the order
-        const orderResponse = await apiConnector("POST", SHOUSE_PAYMENT_API, {shouses});
+      //initiate the order
+      const orderResponse = await apiConnector("POST", SHOUSE_PAYMENT_API, {
+        shouses,
+      });
 
-        if(!orderResponse.data.success) {
-            throw new Error(orderResponse.data.message);
-        }
-        console.log("PRINTING orderResponse", orderResponse);
+      if (!orderResponse.data.success) {
+        throw new Error(orderResponse.data.message);
+      }
+      console.log("PRINTING orderResponse", orderResponse);
+      console.log("razorpay key", process.env.REACT_APP_RAZORPAY_KEY);
 
-        //options
-        const options = {
-          key: process.env.REACT_APP_RAZORPAY_KEY,
-          currency: orderResponse.data.message.currency,
-          amount: `${orderResponse.data.message.amount}`,
-          order_id: orderResponse.data.message.id,
-          name: "Gifty_shop_2",
-          description: "Thank You for Purchasing the Shouse",
-          image: rzpLogo,
-          prefill: {
-            name: `${userDetails.firstName}`,
-            email: userDetails.email,
-          },
-          handler: function (response) {
-            verifyPayment({ ...response, shouses, userId, addressId });
-          },
-        };
-        console.log(options,"this is printing options")
-        
-        const paymentObject = new window.Razorpay(options);
+      //options
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY,
+        currency: orderResponse.data.message.currency,
+        amount: `${orderResponse.data.message.amount}`,
+        order_id: orderResponse.data.message.id,
+        name: "Gifty_shop_2",
+        description: "Thank You for Purchasing the Shouse",
+        image: rzpLogo,
+        prefill: {
+          name: `${userDetails.firstName}`,
+          email: userDetails.email,
+        },
+        handler: function (response) {
+          verifyPayment({ ...response, shouses, userId, addressId });
+        },
+      };
+      console.log(options, "this is printing options");
 
-        paymentObject.open();
-        paymentObject.on("payment.failed", function(response) {
-            toast.error("oops, payment failed");
-            console.log(response.error,"printing error");
-        })
+      const paymentObject = new window.Razorpay(options);
 
+      paymentObject.open();
+      paymentObject.on("payment.failed", function (response) {
+        toast.error("oops, payment failed");
+        console.log(response.error, "printing error");
+      });
     }
     catch(error) {
         console.log("PAYMENT API ERROR.....", error);

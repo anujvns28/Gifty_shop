@@ -29,6 +29,7 @@ import RatingAndReviewModal from "../components/common/RatingAndReviewModal";
 import { buyShouse } from "../service/operation/payment";
 import AddressModal from "../components/common/AddressModal";
 import { setRecentlyView } from "../slice/user";
+import toast from "react-hot-toast";
 
 const SingleProduct = () => {
   const { productId } = useParams();
@@ -44,6 +45,9 @@ const SingleProduct = () => {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const [selectedState, setSelectedState] = useState("None");
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
 
   const handleResize = () => {
     setViewport(window.innerWidth);
@@ -116,7 +120,11 @@ const SingleProduct = () => {
       });
       return;
     } else {
-      setShowAddressModal(true);
+      if (deliveryCharge > 0) {
+        setShowAddressModal(true);
+      } else {
+        toast.error("Please select a delivery location");
+      }
     }
   };
 
@@ -196,12 +204,53 @@ const SingleProduct = () => {
               </p>
               <p className="text-slate-400">incl. of taxes</p>
               <p className="text-slate-400">
-                (Also includes all applicable duties)
+                (Includes delivery charges and all applicable duties)
               </p>
             </div>
             <p className="font-semibold pb-2">
               Color : {productInfo ? productInfo.color : "Loading..."}
             </p>
+            {/* delivery charge */}
+            <div className="flex flex-col gap-2 mb-4 mt-2 border p-4 rounded-md shadow-sm bg-gray-50 w-full max-w-md">
+              <label className="text-sm md:text-base font-semibold text-gray-700">
+                Select Delivery Location
+              </label>
+
+              <select
+                className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-yellow-400 transition-all"
+                value={selectedState}
+                onChange={(e) => {
+                  const state = e.target.value;
+                  setSelectedState(state);
+                  if (state === "Maharashtra") setDeliveryCharge(70);
+                  else if (state === "Other States") setDeliveryCharge(100);
+                  else setDeliveryCharge(0);
+                }}
+              >
+                <option value="None">-- Select State --</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Other States">Other States</option>
+              </select>
+
+              {selectedState !== "None" ? (
+                <>
+                  <p className="text-sm md:text-base text-gray-600">
+                    Delivery Charge:{" "}
+                    <span className="font-semibold">₹{deliveryCharge}</span>
+                  </p>
+                  <p className="text-sm md:text-base text-gray-600">
+                    Total Payable:{" "}
+                    <span className="font-semibold">
+                      ₹{productInfo?.price + deliveryCharge}
+                    </span>
+                  </p>
+                </>
+              ) : (
+                <p className="text-sm text-red-500">
+                  Please select a delivery location
+                </p>
+              )}
+            </div>
 
             <div className="lg:flex hidden flex-col gap-3">
               <div className="flex flex-row gap-3">
@@ -670,6 +719,7 @@ const SingleProduct = () => {
         <AddressModal
           productId={productId}
           setShowAddressModal={setShowAddressModal}
+          deliveryCharge={deliveryCharge}
         />
       )}
     </div>

@@ -52,3 +52,10 @@ export const paymentEndpoints = {
     SHOUSE_VERIFY_API: BASE_URL + "/payment/verifyPayment",
     SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
   }
+
+
+export const orderEndPoints = {
+  GET_USER_ORDERS_API: BASE_URL + "/orders/fetch-orders",
+  UPDATE_ORDER_STATUS_API: BASE_URL + "/orders/status",
+  GET_SINGLE_ORDER_API: BASE_URL + "/orders/fetch-ordersDetails",
+};

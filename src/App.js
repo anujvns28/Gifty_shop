@@ -24,41 +24,52 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import SubCategoriesForAdmin from './pages/SubCategoriesForAdmin';
 import Categories from './pages/Categories';
+import OrderDetailes from "./pages/OrderDetailes";
 
 function App() {
   return (
-    <div className='h-full w-full'>
-      <Navbar/>
+    <div className="h-full w-full">
+      <Navbar />
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/signup' element={<Signup/>}/>
-        <Route path='/verify-email' element={<VeryfyEmail/>}/>
-        <Route path='/products/:categoryId/:subCategoryId' element={<SubCategories/>} />
-        <Route path='/shouse/:productId' element={<SingleProduct/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/verify-email" element={<VeryfyEmail />} />
+        <Route
+          path="/products/:categoryId/:subCategoryId"
+          element={<SubCategories />}
+        />
+        <Route path="/shouse/:productId" element={<SingleProduct />} />
 
-        <Route  element={<Profile/>} > 
-      <Route path={"my-profile/view-profile"} element={<ProfileInfo/>} />
-      <Route path={"my-profile/add-address"} element={<Address/>} />
-      <Route path={"my-profile/update-password"} element={<UpdatePassword/>} />
-      </Route>
-      <Route path={"/my-profile"} element={<MobileProfile/>} />
-      <Route path={"/add-address"} element={<MobileAddress/>} />
+        <Route element={<Profile />}>
+          <Route path={"my-profile/view-profile"} element={<ProfileInfo />} />
+          <Route path={"my-profile/add-address"} element={<Address />} />
+          <Route
+            path={"my-profile/update-password"}
+            element={<UpdatePassword />}
+          />
+        </Route>
+        <Route path={"/my-profile"} element={<MobileProfile />} />
+        <Route path={"/add-address"} element={<MobileAddress />} />
 
-      <Route path={"/create-product"} element={<AddProduct/>} />
-      <Route path={"/products"} element={<SellerProducts/>} />
-      <Route path={"/cart"} element={<Cart/>}/>
-      <Route path={"/wishlist"} element={<Wishlist/>} />
-      <Route path={"/orders"} element={<MyOrders/>} />
-      <Route path={"/dashboard"} element={<Dashboard/>} />
-      <Route path={"/forgot-password"} element={<ForgotPassword/>} />
-      <Route path={"/update-password/:token"} element={<ResetPassword/>} />
+        <Route path={"/create-product"} element={<AddProduct />} />
+        <Route path={"/products"} element={<SellerProducts />} />
+        <Route path={"/cart"} element={<Cart />} />
+        <Route path={"/wishlist"} element={<Wishlist />} />
+        <Route path={"/orders"} element={<MyOrders />} />
+        <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route path={"/forgot-password"} element={<ForgotPassword />} />
+        <Route path={"/update-password/:token"} element={<ResetPassword />} />
 
-      <Route path='/categories' element={<Categories/>}/>
-      <Route path='/sub-categories/:subCategoryId' element={<SubCategoriesForAdmin/>}/>
+        <Route path="/categories" element={<Categories />} />
+        <Route
+          path="/sub-categories/:subCategoryId"
+          element={<SubCategoriesForAdmin />}
+        />
+        <Route path="/order-details/:orderId" element={<OrderDetailes />} />
       </Routes>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 }

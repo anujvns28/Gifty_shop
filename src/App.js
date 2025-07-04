@@ -15,15 +15,15 @@ import MobileProfile from './pages/MobileProfile';
 import MobileAddress from './pages/MobileAddress';
 import UpdatePassword from './components/core/profile/UpdatePassword';
 import AddProduct from './pages/AddProduct';
-import SellerProducts from './pages/SellerProducts';
-import Cart from './pages/Cart';
-import Wishlist from './pages/Wishlist';
-import MyOrders from './pages/MyOrders';
-import Dashboard from './pages/Dashboard';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import SubCategoriesForAdmin from './pages/SubCategoriesForAdmin';
-import Categories from './pages/Categories';
+import CustomerOrders from "./pages/CustomerOrders";
+import Cart from "./pages/Cart";
+import Wishlist from "./pages/Wishlist";
+import MyOrders from "./pages/MyOrders";
+import Dashboard from "./pages/Dashboard";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import SubCategoriesForAdmin from "./pages/SubCategoriesForAdmin";
+import Categories from "./pages/Categories";
 import OrderDetailes from "./pages/OrderDetailes";
 
 function App() {
@@ -53,7 +53,7 @@ function App() {
         <Route path={"/add-address"} element={<MobileAddress />} />
 
         <Route path={"/create-product"} element={<AddProduct />} />
-        <Route path={"/products"} element={<SellerProducts />} />
+        <Route path={"/customer-orders"} element={<CustomerOrders />} />
         <Route path={"/cart"} element={<Cart />} />
         <Route path={"/wishlist"} element={<Wishlist />} />
         <Route path={"/orders"} element={<MyOrders />} />

@@ -222,7 +222,7 @@ const SingleProduct = () => {
                 onChange={(e) => {
                   const state = e.target.value;
                   setSelectedState(state);
-                  if (state === "Maharashtra") setDeliveryCharge(1);
+                  if (state === "Maharashtra") setDeliveryCharge(70);
                   else if (state === "Other States") setDeliveryCharge(100);
                   else setDeliveryCharge(0);
                 }}

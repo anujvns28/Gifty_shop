@@ -58,4 +58,6 @@ export const orderEndPoints = {
   GET_USER_ORDERS_API: BASE_URL + "/orders/fetch-orders",
   UPDATE_ORDER_STATUS_API: BASE_URL + "/orders/status",
   GET_SINGLE_ORDER_API: BASE_URL + "/orders/fetch-ordersDetails",
+  GET_ALL_CATEGORY_API: BASE_URL + "/orders/all-ordersForAdmin",
+  UPDATE_ORDER_STATUS_FOR_ADMIN_API: BASE_URL + "/orders/update-order-status",
 };

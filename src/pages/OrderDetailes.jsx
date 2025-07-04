@@ -131,30 +131,33 @@ const OrderDetails = () => {
       <h2 className="text-2xl font-bold mb-6 text-center border-b pb-2">Order Details</h2>
 
       {/* Tracking UI */}
-      <div className="mb-10 flex items-center justify-between relative">
-        {orderSteps.map((step, index) => (
-          <div key={step} className="flex flex-col items-center flex-1 relative z-10">
-            <div
-              className={`w-8 h-8 flex items-center justify-center rounded-full 
-              ${index <= currentStepIndex
-                ? "bg-green-600 text-white"
-                : "bg-gray-300 text-gray-600"
-              }`}
-            >
-              {index <= currentStepIndex ? <FaCheckCircle /> : index + 1}
-            </div>
-            <p className="text-sm mt-2 text-center">{step}</p>
-          </div>
-        ))}
-        <div className="absolute top-4 left-4 right-4 h-1 bg-gray-300 z-0">
-          <div
-            className="h-1 bg-green-600"
-            style={{
-              width: `${((currentStepIndex + 1) / orderSteps.length) * 100}%`,
-            }}
-          ></div>
-        </div>
+      <div className="relative mb-10 flex flex-wrap justify-between items-start gap-y-6 sm:gap-y-0">
+  {/* Progress Bar Track */}
+  <div className="absolute top-4 left-0 w-full h-1 bg-gray-300 z-0">
+    <div
+      className="h-1 bg-green-600 transition-all duration-300"
+      style={{
+        width: `${((currentStepIndex + 1) / orderSteps.length) * 100}%`,
+      }}
+    ></div>
+  </div>
+
+  {orderSteps.map((step, index) => (
+    <div key={step} className="flex flex-col items-center z-10 w-1/4 min-w-[80px] flex-shrink-0">
+      <div
+        className={`w-8 h-8 flex items-center justify-center rounded-full 
+        ${index <= currentStepIndex
+          ? "bg-green-600 text-white"
+          : "bg-gray-300 text-gray-600"
+        }`}
+      >
+        {index <= currentStepIndex ? <FaCheckCircle className="text-sm" /> : index + 1}
       </div>
+      <p className="text-sm mt-2 text-center break-words w-full">{step}</p>
+    </div>
+  ))}
+</div>
+
 
       {/* Order Info */}
       <div className="bg-white shadow rounded-lg p-4 mb-6">

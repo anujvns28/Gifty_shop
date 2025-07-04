@@ -77,9 +77,9 @@ const Navbar = () => {
     },
     {
       id: 2,
-      name: "Products",
+      name: "Customer Orders",
       icon: <VscGift />,
-      link: "/products",
+      link: "/customer-orders",
     },
     {
       id: 3,
